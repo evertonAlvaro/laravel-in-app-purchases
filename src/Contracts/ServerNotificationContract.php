@@ -25,6 +25,11 @@ interface ServerNotificationContract
     public function getSubscription(?ClientInterface $client = null): SubscriptionContract;
 
     /**
+     * Gets the product associated with the notification.
+     */
+    public function getProduct(?ClientInterface $client = null): ProductContract;
+
+    /**
      * Returns true if the notification is a test notification.
      */
     public function isTest(): bool;

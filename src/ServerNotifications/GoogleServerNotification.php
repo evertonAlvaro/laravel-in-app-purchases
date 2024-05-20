@@ -9,7 +9,9 @@ use GuzzleHttp\Exception\GuzzleException;
 use Imdhemy\GooglePlay\DeveloperNotifications\DeveloperNotification;
 use Imdhemy\Purchases\Contracts\ServerNotificationContract;
 use Imdhemy\Purchases\Contracts\SubscriptionContract;
+use Imdhemy\Purchases\Contracts\ProductContract;
 use Imdhemy\Purchases\Subscriptions\GoogleSubscription;
+use Imdhemy\Purchases\Products\GoogleProduct;
 
 /**
  * Class GoogleServerNotification.
@@ -43,6 +45,14 @@ class GoogleServerNotification implements ServerNotificationContract
     public function getSubscription(?ClientInterface $client = null): SubscriptionContract
     {
         return GoogleSubscription::createFromDeveloperNotification($this->notification, $client);
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function getProduct(?ClientInterface $client = null): ProductContract
+    {
+        return GoogleProduct::createFromDeveloperNotification($this->notification, $client);
     }
 
     public function isTest(): bool

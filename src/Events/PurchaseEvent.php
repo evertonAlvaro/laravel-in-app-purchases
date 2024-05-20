@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Imdhemy\Purchases\Contracts\PurchaseEventContract;
 use Imdhemy\Purchases\Contracts\ServerNotificationContract;
 use Imdhemy\Purchases\Contracts\SubscriptionContract;
+use Imdhemy\Purchases\Contracts\ProductContract;
 
 abstract class PurchaseEvent implements PurchaseEventContract
 {
@@ -44,5 +45,10 @@ abstract class PurchaseEvent implements PurchaseEventContract
     public function getSubscriptionIdentifier(): string
     {
         return $this->getSubscription()->getUniqueIdentifier();
+    }
+
+    public function getProduct(?ClientInterface $client = null): ProductContract
+    {
+        return $this->serverNotification->getProduct($client);
     }
 }

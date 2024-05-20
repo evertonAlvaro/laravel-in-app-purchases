@@ -7,6 +7,7 @@ namespace Imdhemy\Purchases\Handlers;
 use Illuminate\Support\Facades\Log;
 use Imdhemy\GooglePlay\DeveloperNotifications\DeveloperNotification;
 use Imdhemy\GooglePlay\DeveloperNotifications\SubscriptionNotification;
+use Imdhemy\GooglePlay\DeveloperNotifications\OneTimePurchaseNotification;
 use Imdhemy\Purchases\ServerNotifications\GoogleServerNotification;
 use JsonException;
 
@@ -55,6 +56,11 @@ class GooglePlayNotificationHandler extends AbstractNotificationHandler
         }
 
         if ($developerNotification->getPayload() instanceof SubscriptionNotification) {
+            $event = $this->eventFactory->create($googleNotification);
+            event($event);
+        }
+
+        if ($developerNotification->getPayload() instanceof OneTimePurchaseNotification) {
             $event = $this->eventFactory->create($googleNotification);
             event($event);
         }

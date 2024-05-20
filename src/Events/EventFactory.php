@@ -6,6 +6,7 @@ namespace Imdhemy\Purchases\Events;
 
 use Illuminate\Support\Str;
 use Imdhemy\GooglePlay\DeveloperNotifications\SubscriptionNotification;
+use Imdhemy\GooglePlay\DeveloperNotifications\OneTimePurchaseNotification;
 use Imdhemy\Purchases\Contracts\EventFactory as EventFactoryContract;
 use Imdhemy\Purchases\Contracts\PurchaseEventContract as PurchaseEvent;
 use Imdhemy\Purchases\Contracts\ServerNotificationContract as ServerNotification;
@@ -33,8 +34,11 @@ class EventFactory implements EventFactoryContract
 
         $type = $notification->getType();
         if (ServerNotification::PROVIDER_GOOGLE_PLAY === $provider) {
+            $notificationClass = ($notification->getPayload() instanceof OneTimePurchaseNotification) 
+                            ? OneTimePurchaseNotification::class 
+                            : SubscriptionNotification::class;
             $notificationType = (int)$notification->getType();
-            $types = (new ReflectionClass(SubscriptionNotification::class))->getConstants();
+            $types = (new ReflectionClass($notificationClass))->getConstants();
             $type = (string)array_search($notificationType, $types, true);
         }
 
