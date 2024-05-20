@@ -24,7 +24,7 @@ class EventFactory
      */
     public static function create(GoogleServerNotification $notification): PurchaseEventContract
     {
-        $notificationClass = ($notification->getPayload() instanceof OneTimePurchaseNotification) 
+        $notificationClass = (array_key_exists('oneTimeProductNotification', $notification->getPayload()))
                             ? OneTimePurchaseNotification::class 
                             : SubscriptionNotification::class;
         $notificationType = (int) $notification->getType();

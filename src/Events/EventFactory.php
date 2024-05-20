@@ -34,7 +34,7 @@ class EventFactory implements EventFactoryContract
 
         $type = $notification->getType();
         if (ServerNotification::PROVIDER_GOOGLE_PLAY === $provider) {
-            $notificationClass = ($notification->getPayload() instanceof OneTimePurchaseNotification) 
+            $notificationClass = (array_key_exists('oneTimeProductNotification', $notification->getPayload()))
                             ? OneTimePurchaseNotification::class 
                             : SubscriptionNotification::class;
             $notificationType = (int)$notification->getType();
