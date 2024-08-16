@@ -84,7 +84,7 @@ class LiapConfigPublishCommand extends Command
     /**
      * Should run on command failure.
      */
-    private function fail(): int
+    public function fail(): int
     {
         $this->error(self::MESSAGE_ALREADY_INSTALLED);
 
